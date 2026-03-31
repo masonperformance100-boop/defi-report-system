@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeFi Portfolio Report System — Fast Track</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0a;--bg2:#111111;--card:#161616;--text:#f5f5f5;--muted:#a3a3a3;--border:#262626;--gold:#ffc700;--green:#22c55e;--red:#ef4444;--warn:#f59e0b;--r:8px;--rl:12px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7;}
+.page{max-width:860px;margin:0 auto;padding:48px 28px 80px;}
+.hdr{text-align:center;margin-bottom:52px;padding-bottom:36px;border-bottom:1px solid var(--border);}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.hdr h1{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;line-height:1.2;margin-bottom:12px;}
+.hdr p{font-size:15px;color:var(--muted);max-width:540px;margin:0 auto;}
+.meta-row{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:16px;font-size:12px;color:var(--muted);}
+.dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--gold);margin-right:7px;}
+.section{margin-bottom:48px;}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--text);margin-bottom:6px;}
+.sec-subtitle{font-size:13px;color:var(--muted);margin-bottom:20px;}
+.step-block{background:var(--card);border:1px solid var(--border);border-radius:var(--rl);padding:20px 22px;margin-bottom:10px;display:flex;gap:16px;align-items:flex-start;}
+.step-num{width:32px;height:32px;border-radius:50%;background:var(--gold);color:#0a0a0a;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.step-title{font-weight:700;font-size:14px;margin-bottom:5px;}
+.step-detail{font-size:13px;color:var(--muted);line-height:1.65;}
+.step-detail strong{color:var(--text);}
+.prompt-container{position:relative;margin-top:4px;}
+.prompt-box{background:#0d0d0d;border:1px solid var(--border);border-radius:var(--rl);padding:24px 26px 24px 26px;font-family:monospace;font-size:13px;line-height:1.85;color:#e0e0e0;white-space:pre-wrap;word-break:break-word;}
+.ph{color:var(--gold);font-weight:700;}
+.cm{color:#555;font-style:italic;}
+.copy-btn{position:absolute;top:12px;right:12px;background:var(--gold);color:#0a0a0a;border:none;border-radius:6px;padding:7px 16px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;}
+.copy-btn:hover{background:#e6b300;}
+.copy-btn.copied{background:var(--green);color:#fff;}
+.flag-legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:10px;}
+.flag-item{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:13px 16px;display:flex;gap:10px;align-items:flex-start;}
+.flag-icon{font-size:16px;flex-shrink:0;}
+.flag-label{font-size:13px;font-weight:700;margin-bottom:3px;}
+.flag-desc{font-size:12px;color:var(--muted);line-height:1.5;}
+.custom-table{width:100%;border-collapse:collapse;background:var(--card);border-radius:var(--rl);overflow:hidden;border:1px solid var(--border);}
+.custom-table th{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:10px 16px;text-align:left;background:var(--bg2);border-bottom:1px solid var(--border);}
+.custom-table td{padding:12px 16px;font-size:13px;border-bottom:1px solid rgba(38,38,38,.5);vertical-align:top;}
+.custom-table tr:last-child td{border-bottom:none;}
+.custom-table td:first-child{font-weight:700;color:var(--gold);white-space:nowrap;}
+.custom-table td:nth-child(2){color:var(--muted);font-size:12px;}
+.callout{border-left:3px solid var(--gold);background:#111;border-radius:0 var(--r) var(--r) 0;padding:14px 18px;margin:16px 0;font-size:13px;color:var(--muted);line-height:1.65;}
+.callout strong{color:var(--text);}
+.tip-block{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:var(--rl);padding:18px 22px;margin-bottom:10px;display:flex;gap:14px;align-items:flex-start;}
+.tip-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
+.tip-title{font-weight:700;font-size:14px;margin-bottom:4px;}
+.tip-body{font-size:13px;color:var(--muted);line-height:1.65;}
+.tip-body strong{color:var(--text);}
+.footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-sig{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);}
+.footer-meta{font-size:11px;color:var(--muted);text-align:right;line-height:1.7;}
+@media(max-width:600px){.hdr h1{font-size:1.8rem;}.prompt-box{font-size:12px;padding:14px;}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="hdr">
+  <div class="eyebrow">Fast Track — CryptoLabs Research</div>
+  <h1>The DeFi Portfolio Report System</h1>
+  <p>A repeatable process to generate a branded, intelligent weekly portfolio report using Claude AI. Built and battle-tested by Mase.</p>
+  <div class="meta-row">
+    <span><span class="dot"></span>Created by Colin Mason</span>
+    <span><span class="dot"></span>March 2026</span>
+    <span><span class="dot"></span>Version 1.0</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-title">What This Is</div>
+  <div class="sec-subtitle">The short version before we get into it.</div>
+  <div class="callout">This system lets you drop screenshots of your DeFi portfolio into Claude AI every week and receive a fully formatted, branded HTML report — total portfolio value, cash flow performance, risk flags, lending positions, LP health, and action items all in one place. No coding required. No expensive tools. Just a skill, your screenshots, and about 15 minutes.</div>
+  <p style="font-size:13px;color:var(--muted);margin-top:14px;">The report pulls live prices automatically from CoinGecko every time you open it. Everything else comes from your screenshots. You own the process. You own the output.</p>
+</div>
+
+<div class="section">
+  <div class="sec-title">One-Time Setup</div>
+  <div class="sec-subtitle">Do this once before your first report. If you have been through the Fast Track AI Lab, most of this is already done.</div>
+
+  <div class="step-block">
+    <div class="step-num">1</div>
+    <div>
+      <div class="step-title">Use your dedicated Claude project</div>
+      <div class="step-detail">Open your Claude project from the Fast Track AI Lab and make sure your master context document is fully up to date — your goals, time horizon, risk tolerance, current portfolio setup, active protocols, and strategies. The more complete this is, the smarter your report will be. <strong>If you have not yet set up your Claude project, complete the AI Lab module before running this report.</strong></div>
+    </div>
+  </div>
+
+  <div class="step-block">
+    <div class="step-num">2</div>
+    <div>
+      <div class="step-title">Update your tracking sheets and take screenshots</div>
+      <div class="step-detail">Whatever tracking system you use, make sure your holdings, quantities, and positions are current before you screenshot anything. Stale data produces a stale report. <strong>Update first, screenshot second.</strong></div>
+    </div>
+  </div>
+
+  <div class="step-block">
+    <div class="step-num">3</div>
+    <div>
+      <div class="step-title">Save the Report Skill to your Claude project</div>
+      <div class="step-detail">Copy the Report Skill below and add it to your Claude project as a markdown file or project instruction. Once it is saved, you never need to paste it again. Every future session just say <strong>"I'd like to create a new portfolio report"</strong> and drop your screenshots — Claude already knows the structure, the branding, and exactly what to flag.</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-title">Your Weekly Screenshot Stack</div>
+  <div class="sec-subtitle">Gather these before each report session. Target: 10 to 15 minutes to collect everything.</div>
+
+  <div class="step-block">
+    <div class="step-num">1</div>
+    <div>
+      <div class="step-title">LP performance screenshots</div>
+      <div class="step-detail">One screenshot per LP position from your tracking tool — DefiBuddy, vfat.io, or equivalent. Should show current value, APR, daily earnings, uncollected fees, and whether the position is in or out of range.</div>
+    </div>
+  </div>
+
+  <div class="step-block">
+    <div class="step-num">2</div>
+    <div>
+      <div class="step-title">Tracking sheet screenshots</div>
+      <div class="step-detail">Screenshots of your holdings tracker, lending positions, and any other sheets that track your portfolio. Update quantities before screenshotting.</div>
+    </div>
+  </div>
+
+  <div class="step-block">
+    <div class="step-num">3</div>
+    <div>
+      <div class="step-title">Wallet and protocol balances</div>
+      <div class="step-detail">Any protocol dashboards and wallet balances — especially loose USDC or ETH sitting idle and not yet deployed. The report flags idle capital every single time.</div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:14px;"><strong>The rule:</strong> If it has information about what your portfolio looks like right now, screenshot it and include it. More data means a more accurate report and better decisions.</div>
+</div>
+
+<div class="section">
+  <div class="sec-title">The Report Skill</div>
+  <div class="sec-subtitle">Save this to your Claude project once. After that, just say "create a new portfolio report" and drop your screenshots.</div>
+  <div class="prompt-container">
+    <button class="copy-btn" id="copy-skill" onclick="copySkill(this)">Copy</button>
+    <div class="prompt-box" id="skill-text"># DEFI PORTFOLIO REPORT SKILL
+# Add this to your Claude project as a markdown file or project instruction.
+# After saving it, just say "create a new portfolio report" and attach your screenshots.
+
+When asked to create a portfolio report or weekly report, do the following:
+
+1. Read all screenshots provided — LP positions, lending positions, tracking sheets, wallet balances, and any protocol dashboards.
+
+2. Fetch live prices from the CoinGecko API for all assets in the portfolio.
+
+3. Generate a complete, self-contained HTML report file using the brand colors, fonts, and community name from the project context document.
+
+The report must include these sections in order:
+
+SECTION 1 — Header
+Community name as eyebrow text, report title, date, version number.
+
+SECTION 2 — Phase Banner
+One line showing current investment phase and priority stack from the context document.
+
+SECTION 3 — Cash Flow Progress Bar
+Current monthly cash flow vs target from context. Show percentage progress, daily rate, and how much more per day is needed to hit the target. Include LP deploy trigger callout if trigger conditions are currently met.
+
+SECTION 4 — Portfolio Snapshot
+Six stat cards: Total portfolio value (live-priced), LP daily cash flow, LP blended APR, total uncollected fees, total lent, total borrowed.
+
+SECTION 5 — Goals
+Top 3 goals from the context document displayed as cards.
+
+SECTION 6 — Risk Flags and Action Items
+Scan every position and flag automatically:
+- RED: Health factor below minimum threshold OR LTV above maximum threshold OR liquidation price within 25% of current price
+- RED: Any LP position out of range earning 0% APR
+- YELLOW: Any idle capital earning 0% in a wallet
+- YELLOW: Cash flow below target
+- BLUE: LP deploy trigger conditions met — opportunity to act
+- GREEN: Healthy positions — confirm status, no action needed
+Every flag must include what the issue is, the specific numbers, and a suggested action.
+
+SECTION 7 — LP Positions Table
+Pool, chain, value, APR, daily earnings, uncollected fees, in/out of range status. Total row at bottom.
+
+SECTION 8 — Lending and Borrowing Table
+Protocol, chain, collateral, amount lent, amount borrowed, LTV, health factor, liquidation price, status. Color-code red for danger, yellow for watch, green for healthy. Total row at bottom.
+
+SECTION 9 — Treasury Holdings Table
+Live prices via CoinGecko. Asset, quantity, live price, current value, notes. Subtotal row.
+
+SECTION 10 — Stablecoin Reserve Table
+Location, asset, amount, APY, purpose. Flag any idle 0% APY balances. Show total reserve and how many LP tranches remain at the user's standard tranche size.
+
+SECTION 11 — Bull Run Bag (collapsible)
+All speculative or long-tail positions in a collapsible section so it does not clutter the main report view.
+
+SECTION 12 — Weekly Action Checklist
+Generate a checklist of this week's specific actions based on the flags above. Make each item checkable. Prioritize by urgency — red flags first, then yellow, then blue opportunities.
+
+SECTION 13 — Footer
+User sign-off from context, community name, generation date, note that prices are live via CoinGecko.
+
+TECHNICAL REQUIREMENTS
+- Single self-contained HTML file with no external dependencies except Google Fonts and CoinGecko API
+- CoinGecko API call on page load for live prices with graceful fallback to screenshot prices if API fails
+- Brand colors and fonts from user context document
+- Dark theme
+- Mobile-responsive tables
+- Collapsible bull run bag section
+- Checkable action checklist items
+- Report date auto-sets to today
+
+After generating the HTML file, summarize the 2 to 3 most important things the user needs to act on this week based on the data.</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-title">What the Report Flags Automatically</div>
+  <div class="sec-subtitle">Every report scans your positions and surfaces these. Each flag comes with a suggested action — not just a warning.</div>
+  <div class="flag-legend">
+    <div class="flag-item"><div class="flag-icon">🔴</div><div><div class="flag-label">High Risk</div><div class="flag-desc">Health factor below threshold. LTV too high. Liquidation price too close. LP at 0% APR. Needs action this week.</div></div></div>
+    <div class="flag-item"><div class="flag-icon">🟡</div><div><div class="flag-label">Watch / Warning</div><div class="flag-desc">Position tightening. Idle capital at 0%. Cash flow below target. No immediate danger but needs a plan.</div></div></div>
+    <div class="flag-item"><div class="flag-icon">🔵</div><div><div class="flag-label">Opportunity</div><div class="flag-desc">Deploy trigger hit. Uncollected fees ready. Strategic move available based on current conditions.</div></div></div>
+    <div class="flag-item"><div class="flag-icon">🟢</div><div><div class="flag-label">Healthy</div><div class="flag-desc">Position performing well. Confirmed — no action needed. Good to know, not just the warnings.</div></div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-title">Customize for Your Setup</div>
+  <div class="sec-subtitle">These variables live in your Claude project context document. Update them there and the report updates automatically.</div>
+  <table class="custom-table">
+    <thead><tr><th>Variable</th><th>What it controls</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td>Cash flow target</td><td>The progress bar — shows % toward your monthly goal</td><td>$1,000/month</td></tr>
+      <tr><td>Max LTV threshold</td><td>When to trigger a red flag on lending positions</td><td>50% — flag above this</td></tr>
+      <tr><td>Min health factor</td><td>When to trigger a red flag on health factor</td><td>1.8 — flag below this</td></tr>
+      <tr><td>LP deploy trigger</td><td>The opportunity callout when conditions are met</td><td>ETH below $2,000</td></tr>
+      <tr><td>Brand colors + fonts</td><td>The entire visual theme of the report</td><td>Background #0a0a0a, accent #ffc700</td></tr>
+      <tr><td>Treasury assets</td><td>Which assets get the main holdings table</td><td>BTC, ETH, TAO, SOL</td></tr>
+      <tr><td>Active protocols</td><td>Which lending and LP sections appear</td><td>AAVE, Moonwell, MarginFi, Navi</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <div class="sec-title">Pro Tips from Mase</div>
+  <div class="sec-subtitle">Things I learned building this system that will save you time and money.</div>
+
+  <div class="tip-block"><div class="tip-icon">💡</div><div><div class="tip-title">Keep your sheets updated between reports</div><div class="tip-body">The report is only as good as the data you feed it. If you buy more BTC, update the quantity that day — not on report day. Takes 30 seconds. Makes the report accurate.</div></div></div>
+
+  <div class="tip-block"><div class="tip-icon">💡</div><div><div class="tip-title">Work through the action checklist before you close the report</div><div class="tip-body">The checklist at the bottom is the whole point. Not to admire the numbers — to act on what they are telling you. Five minutes of action beats an hour of analysis.</div></div></div>
+
+  <div class="tip-block"><div class="tip-icon">💡</div><div><div class="tip-title">Start weekly, then scale back as things stabilize</div><div class="tip-body">Run this every week when you are first building your positions — especially with active LPs or tight health factors. <strong>As your positions stabilize and you know your portfolio well, scale back to biweekly or monthly.</strong> Let the complexity of your current setup dictate the frequency.</div></div></div>
+
+  <div class="tip-block"><div class="tip-icon">💡</div><div><div class="tip-title">Save each report as its own HTML file</div><div class="tip-body">Name it with the date: <strong>portfolio-report-2026-03-30.html</strong>. Open in your browser any time. You will build a history of your portfolio over time — invaluable when deciding whether to scale a strategy or exit a position.</div></div></div>
+
+  <div class="tip-block"><div class="tip-icon">💡</div><div><div class="tip-title">The idle capital flag will make you money</div><div class="tip-body">Every report shows exactly how much capital is sitting idle earning 0%. Before I built this system I had nearly $1,000 in collected LP fees sitting in my wallet for weeks. The flag makes it impossible to ignore. <strong>Idle capital is a decision you made by not deciding.</strong></div></div></div>
+</div>
+
+<div class="footer">
+  <div class="footer-sig">— Mase</div>
+  <div class="footer-meta">CryptoLabs Research · Fast Track Program<br>Built March 2026 · claude.ai</div>
+</div>
+
+</div>
+<script>
+function copySkill(btn) {
+  const text = document.getElementById('skill-text').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>
